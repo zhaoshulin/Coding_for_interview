@@ -56,6 +56,15 @@ int main(void)
 	replace_space(str1);
 	puts(str1);
 
+	char str2[] = " I am zsl ! ";
+	puts(str2);
+	replace_space(str2);
+	puts(str2);
+
+	char str3[] = "I am    zsl";
+	puts(str3);
+	replace_space(str3);
+	puts(str3);
 
 	return 0;
 }
