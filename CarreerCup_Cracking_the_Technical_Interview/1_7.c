@@ -12,7 +12,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-int find_and_reset_0(int (*matrix)[3], int M, int N)
+int find_and_reset_0(int **matrix, int M, int N)
+//不使用int matrix[][3]这样的形式，是为了保证该函数的可移植性。
+//这样做有两个代价，第一个是不能直接使用matrix[i][j]，因为编译器不知道步长是3了。
+//每次使用matrix[i][j]，应该人工模拟编译器：*((int*)matrix + i*N + j)
+//第二个代价是在main函数往该函数里面传参数时，需要把int matrix[][3]类型强制转换为 （int**）matrix型。 
 {
 	int i, j, t;
 	int row[M], column[N];
@@ -30,7 +34,7 @@ int find_and_reset_0(int (*matrix)[3], int M, int N)
 	{
 		for(j = 0; j < N; j ++)
 		{
-			printf("%d ", matrix[i][j]);
+			printf("%d ", *((int*)matrix + i*N + j));
 		}
 		printf("\n");
 	}	
@@ -40,7 +44,7 @@ int find_and_reset_0(int (*matrix)[3], int M, int N)
 	{
 		for(j = 0; j < N; j ++)
 		{
-			if(matrix[i][j] == 0)
+			if(*((int*)matrix + i*N + j) == 0)
 			{
 				row[i] = 1;
 				column[j] = 1;
@@ -54,7 +58,7 @@ int find_and_reset_0(int (*matrix)[3], int M, int N)
 		for(j = 0; j < N; j ++)
 		{
 			if(row[i] || column[j])
-				matrix[i][j] = 0;
+				*((int*)matrix + i*N + j) = 0;
 		}
 	}	
 
@@ -63,7 +67,7 @@ int find_and_reset_0(int (*matrix)[3], int M, int N)
 	{
 		for(j = 0; j < N; j ++)
 		{
-			printf("%d ", matrix[i][j]);
+			printf("%d ", *((int*)matrix + i*N + j));
 		}
 		printf("\n");
 	}
@@ -75,6 +79,9 @@ int main(void)
 	printf("Testing find_and_reset_0()...\n");
 	
 	int matrix[][3] = {1, 2, 3, 4, 0, 6};
-	find_and_reset_0(matrix, 2, 3);
+	find_and_reset_0((int **)matrix, 2, 3);
+
+	int matrix_2[][4] = {1, 0, 3, 0, 5, 6, 7, 8, 9, 0, 10, 11, 12};
+	find_and_reset_0((int **)matrix_2, 3, 4);
 	return 0;
 }
