@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
 //因为c语言中没有多维数组的概念，所以我决定用一维数组表示二维数组，一劳永逸。
 int len, N;
@@ -92,6 +93,9 @@ int main(void)
 {
 	printf("Testing matrix...\n");
 	int matrix_1[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	len = sizeof(matrix_1) / sizeof(matrix_1[0]);
+	for(N = 0; N*N < len; N ++);
+
 	print_matrix(matrix_1);
 	printf("\n");
 	rotate_90(matrix_1);
@@ -99,9 +103,8 @@ int main(void)
 	
 	printf("\n");
 	int matrix_2[16] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
-	len = sizeof(matrix_2) / sizeof(int);
+	len = sizeof(matrix_2) / sizeof(matrix_2[0]);
 	for(N = 0; N*N < len; N ++);
-	printf("In main, len is %d, N is %d.\n", len, N);
 
 	print_matrix(matrix_2);
 	printf("\n");
