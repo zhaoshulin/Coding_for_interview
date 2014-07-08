@@ -93,7 +93,7 @@ int main(void)
 {
 	printf("Testing matrix...\n");
 	int matrix_1[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-	len = sizeof(matrix_1) / sizeof(matrix_1[0]);
+	len = sizeof(matrix_1) / sizeof(matrix_1[0]);//Only can be in main()!!!
 	for(N = 0; N*N < len; N ++);
 
 	print_matrix(matrix_1);
