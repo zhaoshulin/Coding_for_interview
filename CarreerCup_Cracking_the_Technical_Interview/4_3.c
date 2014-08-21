@@ -22,10 +22,9 @@ typedef struct TreeNode_tag
 	struct TreeNode_tag *lchild, *rchild, *parent;
 }TreeNode, *p_TreeNode;
 
-TreeNode* create(TreeNode *root, TreeNode *parent, int a[], int start, int end)
+void create(TreeNode **root, TreeNode *parent, int a[], int start, int end)
 {
 	int middle;
-	TreeNode * tmp;
 
 	if(start <= end)
 	{
@@ -33,17 +32,10 @@ TreeNode* create(TreeNode *root, TreeNode *parent, int a[], int start, int end)
 		TreeNode * new = (TreeNode *)malloc(sizeof(TreeNode));
 		new -> data = a[middle];
 		new -> parent = parent;
-		root = new;
+		*root = new;
 
-		create(root->lchild, root, a, start, middle - 1);
-		create(root->rchild, root, a, middle + 1, end);	
-	}
-	else
-	{
-		tmp = root;
-		while(tmp -> parent != NULL)
-			tmp = tmp -> parent;
-		return tmp;
+		create(&new->lchild, new, a, start, middle - 1);
+		create(&new->rchild, new, a, middle + 1, end);	
 	}
 }
 
@@ -64,11 +56,10 @@ int main(void)
 {
 	int a[] = {0, 1, 2, 3, 4, 5, 6, 7};
 	TreeNode *root = NULL;
-	TreeNode * tmp;
 
 	printf("create testing...\n");
-	tmp = create(root, NULL, a, 0, 7);
-	printf("Tree height is %d.\n", height(tmp));
+	create(&root, NULL, a, 0, 7);
+	printf("Tree height is %d.\n", height(root));
 
 	return 0;
 }
